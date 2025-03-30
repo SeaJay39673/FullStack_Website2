@@ -60,7 +60,7 @@ const RegisterLoginForm = ({ handleSubmit }) => {
                 type="submit"
                 className="mocha-btn w-100"
             >
-                Register
+                Submit
             </Button>
         </Form>
     )

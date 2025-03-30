@@ -5,14 +5,14 @@ import "../styles/mocha-theme.css"
 import RegisterLoginForm from "./Register-Login-Form"
 import axios from "axios"
 
-const Register = () => {
+const Login = () => {
 
     const [message, setMessage] = useState("")
 
     const handleSubmit = async (formData) => {
-        setMessage("Registering. . .")
+        setMessage("Logging In. . .")
         try {
-            const res = await axios.post("http://localhost:7000/api/account/register", formData)
+            const res = await axios.post("http://localhost:7000/api/account/login", formData)
             setMessage(res.data.message)
             sessionStorage.setItem("token", res.data.token)
         } catch (err) {
@@ -26,7 +26,7 @@ const Register = () => {
                 <Col md={6} lg={4} className="mx-auto">
                     <Card className="mocha-card shadow-lg">
                         <Card.Header className="mocha-card-header text-center">
-                            Register
+                            Login
                         </Card.Header>
                         <Card.Body>
                             <RegisterLoginForm handleSubmit={handleSubmit} />
@@ -37,7 +37,7 @@ const Register = () => {
                             )}
                         </Card.Body>
                         <Card.Footer className="mocha-card-footer">
-                            Already have an account? Login <a href="/Login">Here</a>
+                            Don't have an account? Register <a href="/Register">Here</a>
                         </Card.Footer>
                     </Card>
                 </Col>
@@ -46,4 +46,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Login

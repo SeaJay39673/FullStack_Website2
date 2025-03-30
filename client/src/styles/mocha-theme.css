@@ -17,6 +17,14 @@
     font-weight: bold;
 }
 
+/* Card Footer */
+.mocha-card-footer {
+    background-color: #6d4c41;
+    color: #f8f4f4;
+    font-weight: bold;
+    text-align: center;
+}
+
 /* Labels */
 .mocha-label {
     color: #f8f4f4;

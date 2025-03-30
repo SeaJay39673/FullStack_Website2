@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken"); // Import JWT
 require("dotenv").config()
 const Account = require("../schemas/AccountSchema.js")
 const router = express.Router()
+const bcrypt = require("bcrypt");
 
 router.post("/register", async (req, res) => {
     try {
@@ -51,5 +52,40 @@ router.post("/register", async (req, res) => {
         res.status(500).json({ message: "Internal server error." })
     }
 })
+
+router.post("/login", async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+
+        // Validate input
+        if (!username || !email || !password) {
+            return res.status(400).json({ message: "All fields are required." });
+        }
+
+        // Find the user by username and email
+        const user = await Account.findOne({ username, email });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid username or email." });
+        }
+
+        // Compare the entered password with the hashed password
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: "Invalid password." });
+        }
+
+        // If the password matches, generate a JWT
+        const token = jwt.sign(
+            { id: user._id, username: user.username },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" } // Token expiration time
+        );
+
+        res.status(200).json({ message: "Login successful.", token });
+    } catch (error) {
+        console.error("Error during login:", error);
+        res.status(500).json({ message: "Internal server error." });
+    }
+});
 
 module.exports = router
