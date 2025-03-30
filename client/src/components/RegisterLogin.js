@@ -24,9 +24,10 @@ const RegisterLogin = ({ isLogin = false }) => {
         e.preventDefault()
         setMessage(isLogin ? "Logging in. . ." : "Registering. . .")
         try {
-            const res = await axios.post(`http://localhost:7000/api/account/${isLogin ? "login" : "register"}`, formData)
+            const res = await axios.post(`http://localhost:7001/api/account/${isLogin ? "login" : "register"}`, formData)
             setMessage(res.data.message)
-            sessionStorage.setItem("token", res.data.token)
+            // sessionStorage.setItem("token", res.data.token)
+            localStorage.setItem("token", res.data.token)
         } catch (err) {
             setMessage(err.response.data.message)
         }

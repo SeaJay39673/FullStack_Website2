@@ -7,13 +7,14 @@ const bcrypt = require("bcrypt");
 
 router.post("/register", async (req, res) => {
     try {
-        const { username, email, password } = req.body
+        let { username, email, password } = req.body
 
         // Validate input
         if (!username || !email || !password) {
             return res.status(400).json({ message: "All fields are required." })
         }
 
+        email = email.toLowerCase()
         // Check if the email is already registered
         existingAccount = await Account.findOne({ email })
         if (existingAccount) {
@@ -55,23 +56,22 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-        const { username, email, password } = req.body;
-
+        let { username, email, password } = req.body
+        email = email.toLowerCase()
         // Validate input
         if (!username || !email || !password) {
-            return res.status(400).json({ message: "All fields are required." });
+            return res.status(400).json({ message: "All fields are required." })
         }
-
         // Find the user by username and email
         const user = await Account.findOne({ username, email });
         if (!user) {
-            return res.status(400).json({ message: "Invalid username or email." });
+            return res.status(400).json({ message: "Invalid username or email." })
         }
 
         // Compare the entered password with the hashed password
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcrypt.compare(password, user.password)
         if (!isPasswordValid) {
-            return res.status(400).json({ message: "Invalid password." });
+            return res.status(400).json({ message: "Invalid password." })
         }
 
         // If the password matches, generate a JWT
@@ -79,13 +79,13 @@ router.post("/login", async (req, res) => {
             { id: user._id, username: user.username },
             process.env.JWT_SECRET,
             { expiresIn: "1h" } // Token expiration time
-        );
+        )
 
-        res.status(200).json({ message: "Login successful.", token });
+        res.status(200).json({ message: "Login successful.", token })
     } catch (error) {
-        console.error("Error during login:", error);
-        res.status(500).json({ message: "Internal server error." });
+        console.error("Error during login:", error)
+        res.status(500).json({ message: "Internal server error." })
     }
-});
+})
 
 module.exports = router

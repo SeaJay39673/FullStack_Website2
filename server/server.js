@@ -3,16 +3,12 @@ const mongoose = require("mongoose")
 const express = require("express")
 const cors = require("cors");
 const app = express()
-const PORT = 7000
+const PORT = 7001
 
 const Account = require("./routes/Account.js")
 
 app.use(cors())
 app.use(express.json())
-
-app.get("/", (req, res) => {
-    res.send("Hello, World")
-})
 
 app.use("/api/account", Account)
 
