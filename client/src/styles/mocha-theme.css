@@ -1,0 +1,65 @@
+/* Background and container */
+.mocha-container {
+    background-color: #3b2f2f;
+    color: #f8f4f4;
+    height: 100vh;
+}
+
+/* Card */
+.mocha-card {
+    background-color: #5c4535;
+    border-color: #a38770;
+}
+
+.mocha-card-header {
+    background-color: #6d4c41;
+    color: #f8f4f4;
+    font-weight: bold;
+}
+
+/* Labels */
+.mocha-label {
+    color: #f8f4f4;
+    font-weight: bold;
+}
+
+/* Inputs */
+.mocha-input {
+    background-color: #7b5848;
+    color: #f8f4f4;
+    border: solid #a38770;
+}
+
+/* Override Bootstrap's hover and focus styles for the button */
+.mocha-btn {
+    background-color: #a38770;
+    /* Light mocha button background */
+    color: #3b2f2f;
+    /* Dark mocha text */
+    font-weight: bold;
+    border: solid 2px #a38770;
+    /* Remove blue border */
+    border-radius: 10px;
+    /* Rounded corners */
+    box-shadow: none;
+    /* Remove default shadow */
+}
+
+.mocha-btn:hover,
+.mocha-btn:focus {
+    background-color: #896a58;
+    /* Darker mocha on hover */
+    color: #f8f4f4;
+    /* Creamy white text */
+    border-color: #896a58;
+    /* Match hover background */
+    box-shadow: 0 0 15px #896a58;
+    /* Subtle glow effect */
+}
+
+/* Alert */
+.mocha-alert {
+    background-color: #5c4535;
+    /* Warm coffee-brown */
+    color: #f8f4f4;
+}
