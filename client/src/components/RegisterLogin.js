@@ -1,10 +1,14 @@
-import React, { useState } from "react"
+import React, { use, useState } from "react"
 import { Container, Row, Col, Card, Alert, Form, Button } from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "../styles/mocha-theme.css"
 import axios from "axios"
+import ApiRoute from "../ApiRoute"
+import { useNavigate } from "react-router-dom"
 
 const RegisterLogin = ({ isLogin = false }) => {
+    const navigate = useNavigate()
+
     const [message, setMessage] = useState("")
 
     const [formData, setFormData] = useState({
@@ -24,12 +28,14 @@ const RegisterLogin = ({ isLogin = false }) => {
         e.preventDefault()
         setMessage(isLogin ? "Logging in. . ." : "Registering. . .")
         try {
-            const res = await axios.post(`http://localhost:7001/api/account/${isLogin ? "login" : "register"}`, formData)
+            const res = await axios.post(`${ApiRoute}/account/${isLogin ? "login" : "register"}`, formData)
+            console.log(res)
             setMessage(res.data.message)
-            // sessionStorage.setItem("token", res.data.token)
             localStorage.setItem("token", res.data.token)
+            localStorage.setItem("username", res.data.username)
+            navigate("/")
         } catch (err) {
-            setMessage(err.response.data.message)
+            setMessage(err.response?.data?.message ?? err)
         }
     }
 
